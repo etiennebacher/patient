@@ -34,9 +34,11 @@
 #' * white
 #' * yellow
 #'
+#' @importFrom jsonlite toJSON
+#'
 #' @export
 
-use_patient <- function(theme_name = NULL, theme_color = NULL) {
+use_patient <- function(theme_name = NULL, theme_color = NULL, options = list()) {
 
   if (is.null(theme_name) && !is.null(theme_color))
     stop("You must specify theme_name in order to use theme_color")
@@ -51,12 +53,24 @@ use_patient <- function(theme_name = NULL, theme_color = NULL) {
     theme <- paste0("pace-theme-default.min.css")
   }
 
+  opts <- jsonlite::toJSON(options)
+  opts <- gsub("\\[", "", opts)
+  opts <- gsub("\\]", "", opts)
+
+
   shiny::singleton(
     shiny::tags$head(
       shiny::tags$link(
         href = paste0("pace-assets/", theme),
         rel= "stylesheet",
         type= "text/css"
+      ),
+      shiny::tags$script(
+        HTML(
+          paste0(
+            "paceOptions = ", opts
+          )
+        )
       ),
       shiny::tags$script(
         src = "pace-assets/pace.min.js"

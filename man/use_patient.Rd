@@ -4,7 +4,7 @@
 \alias{use_patient}
 \title{Create a loading bar}
 \usage{
-use_patient(theme_name = NULL, theme_color = NULL)
+use_patient(theme_name = NULL, theme_color = NULL, options = list())
 }
 \arguments{
 \item{theme_name}{Name of the theme, see the list of choices below.}
